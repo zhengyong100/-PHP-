@@ -26,7 +26,7 @@ if(intable($db_dbname,$qianzui."account",$conn)){
 	echo "已存在<br /><font color='red'>已经安装过啦，表前缀已经存在。</font></body></html>";
 	
 }else{
-	$sql = "CREATE TABLE `$db_dbname`.`slt_account` (`acid` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `acmoney` INT(5) NOT NULL, `acclassid` INT(8) NOT NULL, `actime` INT(11) NOT NULL, `acremark` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `jiid` INT(8) NOT NULL, `zhifu` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$sql = "CREATE TABLE `$db_dbname`.`slt_account` (`acid` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `acmoney` DECIMAL(10,2) NOT NULL, `acclassid` INT(8) NOT NULL, `actime` INT(11) NOT NULL, `acremark` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `jiid` INT(8) NOT NULL, `zhifu` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";
 	$query=mysql_query($sql);
 	if($query){
 	echo "成功<br />";
