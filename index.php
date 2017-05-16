@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHP记账程序-xptt多用户版</title>
+<title>记账多用户版</title>
 
 <link rel="stylesheet" type="text/css" href="css/default.css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -154,7 +154,7 @@ jQuery('#tab-title span').click(function(){
 if($_POST['submit']){
   $username=str_replace(" ","",$_POST['username']);
    //去除空格
-     $sql="SELECT * FROM jizhang_user WHERE username = '$username'";
+     $sql="SELECT * FROM slt_user WHERE username = '$username'";
      $query=mysql_query($sql);
         $exist=is_array($row=mysql_fetch_array($query));
          //判断是否存在这样一个用户
@@ -164,7 +164,7 @@ if($_POST['submit']){
                $_SESSION['uid']=$row['uid'];
              // session赋值
                 $_SESSION['user_shell']=md5($row['username'].$row['password']);
-                  echo "<br><br><font color='green'>登陆成功咯！稍等，努力穿越中...</font><meta http-equiv=refresh content='0; url=tianjia.php'>";
+                  echo "<br><br><font color='green'>登陆成功咯！稍等，努力穿越中...</font><meta http-equiv=refresh content='0; url=add.php'>";
 }else{   echo "<br><br><font color='red'>用户名或密码错误啦！</font>";  SESSION_DESTROY();  }  } ?>              
               
  <?php if($_POST[Submitzhuce]){
@@ -175,7 +175,7 @@ echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
 
 } 
         
-        $sql="select * from jizhang_user where username='$_POST[username]' or email='$_POST[email]'";
+        $sql="select * from slt_user where username='$_POST[username]' or email='$_POST[email]'";
   $query=mysql_query($sql);
   $attitle=is_array($row=mysql_fetch_array($query));
   if($attitle){
@@ -184,7 +184,7 @@ echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
   }else{
         $umima=md5($_POST[password]);
         $utime=strtotime("now");
-  $sql="insert into jizhang_user (username, password,email,utime) values ('$_POST[username]', '$umima', '$_POST[email]', '$utime')";
+  $sql="insert into slt_user (username, password,email,utime) values ('$_POST[username]', '$umima', '$_POST[email]', '$utime')";
   $query=mysql_query($sql);
   if($query)
     echo "<br><br><font color='green'>OK，你已经成功注册！随时可以登录！</font>";
@@ -207,7 +207,7 @@ echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
       $email=str_replace(" ","",$_POST['email']);
        //去除空格
 
-         $sql="select * from jizhang_user where email='$email'";
+         $sql="select * from slt_user where email='$email'";
     $query=mysql_query($sql);
     $attitle=is_array($row=mysql_fetch_array($query));
     if($attitle){
@@ -218,7 +218,7 @@ echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
       $time = date('Y-m-d H:i'); 
       $token = md5($uid.$row['username'].$row['password']);//组合验证码 
       
-      $url = $_SERVER['HTTP_HOST']."/ji/zhaohuimima.php?email=".$email."&token=".$token;//构造URL
+      $url = $_SERVER['HTTP_HOST']."/account/password_ret.php?email=".$email."&token=".$token;//构造URL
 
 $mail = new PHPMailer();    
    
@@ -226,7 +226,7 @@ $mail->IsSMTP();                                      // set mailer to use SMTP
 $mail->Host = "smtp.163.com";  // SMTP服务器    
 $mail->Port = 25; 
 $mail->SMTPAuth = true;     // SMTP认证？    
-$mail->Username = "jizhangxptt";  // 用户名    
+$mail->Username = $zyemail;  // 用户名    
 $mail->Password = $zyemailpass; // 密码    
 $mail->From = $zyemail; //发件人地址    
 $mail->FromName = "xptt记账系统管理员"; //发件人    
@@ -244,7 +244,7 @@ $mail->Subject    = "你的密码找回信";
  echo "Mailer Error: " . $mail->ErrorInfo; 
  echo "<br><br><font color=red>邮箱设置错误!</font>"; 
 }else{ 
-  //mysql_query("update `jizhang_user` set `utime`='$getpasstime' where uid='$uid '");
+  //mysql_query("update `slt_user` set `utime`='$getpasstime' where uid='$uid '");
  echo "<br><br><font color=green>找回密码邮件发送成功！请查收</font>"; 
  }
     

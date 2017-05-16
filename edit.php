@@ -1,5 +1,5 @@
 <?php
-    include_once("shangmian.php");
+    include_once("header.php");
 ?>
 <script type="text/javascript">  
           var checkall=document.getElementsByName("del_id[]");  
@@ -30,7 +30,7 @@
 var oTxt1=document.getElementById('zhuan');
 var oBtn1=document.getElementById('zhuan1');
 oBtn1.onclick=function() {
-location.href="xiugai.php?p="+oTxt1.value+"";
+location.href="edit.php?p="+oTxt1.value+"";
 }
 }
 </script>
@@ -61,7 +61,7 @@ location.href="xiugai.php?p="+oTxt1.value+"";
                
                 //针对$ok被激活后的处理：
                 $shij=strtotime("$_GET[shijian]");
-                $sql = "update jizhang_account set acmoney='".$_GET[jine]."',acremark='".$_GET[beizhu]."',actime='".$shij."' where acid='".$_GET[id]."' and jiid='".$_SESSION[uid]."'";
+                $sql = "update slt_account set acmoney='".$_GET[jine]."',acremark='".$_GET[beizhu]."',actime='".$shij."' where acid='".$_GET[id]."' and jiid='".$_SESSION[uid]."'";
                 $result = mysql_query($sql);
                 if ($result)
                     echo("<script type='text/javascript'>alert('修改成功！');history.go(-2);</script>");
@@ -70,11 +70,11 @@ location.href="xiugai.php?p="+oTxt1.value+"";
                              
             }else{
 				 if ($_GET[id]) {
-				$sql = "select * from jizhang_account where acid='".$_GET[id]."' and jiid='".$_SESSION[uid]."'";
+				$sql = "select * from slt_account where acid='".$_GET[id]."' and jiid='".$_SESSION[uid]."'";
                 $result = mysql_query($sql);
                 $row = mysql_fetch_array($result);
                 
-                $sql2="select * from jizhang_account_class where classid= '".$row[acclassid]."' and ufid='".$_SESSION[uid]."'";
+                $sql2="select * from slt_account_class where classid= '".$row[acclassid]."' and ufid='".$_SESSION[uid]."'";
 				$classquery=mysql_query($sql2);
 				$classinfo = mysql_fetch_array($classquery);
 				
@@ -132,7 +132,7 @@ $p = $_GET['p']?$_GET['p']:1;
 $offset = ($p-1)*$pagesize;
 
 //查询本页显示的数据
-$query_sql = "SELECT * FROM jizhang_account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
+$query_sql = "SELECT * FROM slt_account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
 
 $query=mysql_query($query_sql);
 
@@ -146,7 +146,7 @@ $query=mysql_query($query_sql);
                 <th bgcolor='#EBEBEB'>金额</th>
                 <th bgcolor='#EBEBEB'>时间</th>
                 <th bgcolor='#EBEBEB'>备注</th>
-                <th bgcolor='#EBEBEB'><form action='shanchu.php' method='post'><a href='javascript:select()'>全选</a> | <a href='javascript:fanselect()'>反选</a> | <a href='javascript:noselect()'>不选</a> <input type='submit' name='shanchu' value='删除'/></th>
+                <th bgcolor='#EBEBEB'><form action='delete.php' method='post'><a href='javascript:select()'>全选</a> | <a href='javascript:fanselect()'>反选</a> | <a href='javascript:noselect()'>不选</a> <input type='submit' name='delete' value='删除'/></th>
                 </tr>";
              
              if($result === FALSE) {
@@ -154,7 +154,7 @@ $query=mysql_query($query_sql);
 }
 
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from jizhang_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
                 echo "<tr>";
@@ -171,7 +171,7 @@ $query=mysql_query($query_sql);
                echo "<td align='left' bgcolor='#FFFFFF'><font color='red'>".date("Y-m-d",$row[actime])."</font></td>";
                echo "<td align='left' bgcolor='#FFFFFF'><font color='red'>". $row[acremark] ."</font></td>";
                 }
-                echo "<td align='left' bgcolor='#FFFFFF'><a href=xiugai.php?id=".$row['acid'].">编辑</a> <a href=shanchu.php?id=".$row['acid'].">删除</a>
+                echo "<td align='left' bgcolor='#FFFFFF'><a href=edit.php?id=".$row['acid'].">编辑</a> <a href=delete.php?id=".$row['acid'].">删除</a>
 				<input name='del_id[]' type='checkbox' id='del_id[]' value=".$row['acid']." /></td>";
                 echo "</tr>";
             }
@@ -182,7 +182,7 @@ echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1
                 <tr><td align='left' width='100%' bgcolor='#FFFFFF'>";
 //分页代码
 //计算总数
-$count_result = mysql_query("SELECT count(*) as count FROM jizhang_account where jiid='$_SESSION[uid]'");
+$count_result = mysql_query("SELECT count(*) as count FROM slt_account where jiid='$_SESSION[uid]'");
 $count_array = mysql_fetch_array($count_result);
 
 //计算总的页数
@@ -199,24 +199,24 @@ if ($pagenum > 1) {
 }
 
 /* echo "<select name='tiao' id='tiao' style='height:18px' onchange='self.location.href=options[selectedIndex].value;onchange=save()'>";
-echo "<option value='xiugai.php?p=1'>跳转</option>";
+echo "<option value='edit.php?p=1'>跳转</option>";
 if ($pagenum > 1) {
     for($i=1;$i<=$pagenum;$i++) {
         
-            echo "<option value='xiugai.php?p=$i'>$i</option>";
+            echo "<option value='edit.php?p=$i'>$i</option>";
     }
 }
 echo "</select>"; */
 
-//循环输出各页数目及连接	echo ' <a href="xiugai.php?p=',$i-1,'">上一页</a>';
+//循环输出各页数目及连接	echo ' <a href="edit.php?p=',$i-1,'">上一页</a>';
 
- //echo " <li><a href='xiugai.php?p=1'>首页</a></li>";
-  //echo "<li><a href='xiugai.php?p=$pagenum'>尾页</a></li>";
+ //echo " <li><a href='edit.php?p=1'>首页</a></li>";
+  //echo "<li><a href='edit.php?p=$pagenum'>尾页</a></li>";
 if ($pagenum > 1) {
     for($i=1;$i<=$pagenum;$i++) {
         if($i==$p) {
 			if($i!=1){
-            echo '<li><a href="xiugai.php?p=',$i-1,'">&laquo;</a></li>';
+            echo '<li><a href="edit.php?p=',$i-1,'">&laquo;</a></li>';
 			}
         } 
     }
@@ -225,7 +225,7 @@ if ($pagenum > 1) {
 if ($pagenum > 1) {
     for($i=1;$i<$pagenum;$i++) {
         if($i==$p) {
-            echo '<li><a href="xiugai.php?p=',$i+1,'">&raquo;</a></li>';
+            echo '<li><a href="edit.php?p=',$i+1,'">&raquo;</a></li>';
     }
 }
 }
@@ -280,7 +280,7 @@ if (index > 0){
                 //如果是页首，中间页，页尾，当前页的前后三页则不省略。 
 				//if (i < 4 || i < (paging + 3) && i > (paging - 3)|| i > (total / 2 - 2) && i < (total / 2 + 2) || i > (total - 1)) { 
                 if (i < 2 || i < (paging + 4) && i > (paging - 4) || i > (total - 1)) {  
-                    pagingDivInnerHTML += "<li><a href='xiugai.php?p=" + i + "' onclick='pagingConstruct(" + i + ")'>" + i + "</a></li>";  
+                    pagingDivInnerHTML += "<li><a href='edit.php?p=" + i + "' onclick='pagingConstruct(" + i + ")'>" + i + "</a></li>";  
                     isHiddenExist = 0;  
                 }  
                 //否则就构造...  
@@ -309,7 +309,7 @@ if (index > 0){
               <option value="quan">全部分类</option>
               <option value="sr">收入--</option>
 			  <?php
-			  	$sqlshouru="select * from jizhang_account_class where ufid='$_SESSION[uid]' and classtype='1'";
+			  	$sqlshouru="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='1'";
 				$queryshouru=mysql_query($sqlshouru);
 				while($rowshouru = mysql_fetch_array($queryshouru)){
 					echo "<option value='$rowshouru[classid]'>------$rowshouru[classname]</option>";
@@ -317,7 +317,7 @@ if (index > 0){
 			  ?>
 		<option value="zc">支出--</option>
 				<?php
-			  	$sqlzhichu="select * from jizhang_account_class where ufid='$_SESSION[uid]' and classtype='2'";
+			  	$sqlzhichu="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='2'";
 				$queryzhichu=mysql_query($sqlzhichu);
 				while($rowzhichu = mysql_fetch_array($queryzhichu)){
 					echo "<option value='$rowzhichu[classid]'>------$rowzhichu[classname]</option>";
@@ -340,7 +340,7 @@ if (index > 0){
 		
 		  	if(!$_POST[Submit]){  
 		  		
-				 include_once("xiamian.php");
+				 include_once("footer.php");
 				exit();
 				
 		  	}
@@ -355,26 +355,26 @@ if (index > 0){
  				 $a="%";
  				 $b =$_POST[beizhu];
  				 $c=$a.$b.$a;
- 				 $sql="select * from jizhang_account where acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+ 				 $sql="select * from slt_account where acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//什么都没填
 			if($_POST[classid]=="quan" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
-				$sql="select * from jizhang_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//只查询分类
 			if($_POST[classid]<>"quan" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				$sqlclassid="acclassid=".$_POST[classid];
-				$sql="select * from jizhang_account where ".$sqlclassid." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqlclassid." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			
 			//只查询分类收
 			if($_POST[classid]=="zc" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				
-				$sql="select * from jizhang_account where zhifu='2' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='2' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			if($_POST[classid]=="sr" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				
-				$sql="select * from jizhang_account where zhifu='1' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='1' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//只查询分类支
 		
@@ -382,13 +382,13 @@ if (index > 0){
 			if($_POST[classid]=="quan" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
-				$sql="select * from jizhang_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="quan" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
-				$sql="select * from jizhang_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//------------------------------
@@ -400,7 +400,7 @@ if (index > 0){
 				$sqlclassid="acclassid=".$_POST[classid];
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where ".$sqlclassid." and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqlclassid." and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//----------------------------------------
@@ -412,7 +412,7 @@ if (index > 0){
  				 $c=$a.$b.$a;
 				
 
-				$sql="select * from jizhang_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]<>""){
@@ -422,7 +422,7 @@ if (index > 0){
  				 $c=$a.$b.$a;
 				
 
-				$sql="select * from jizhang_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -432,7 +432,7 @@ if (index > 0){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
@@ -440,7 +440,7 @@ if (index > 0){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//查询收支，日期，备注
@@ -452,7 +452,7 @@ if (index > 0){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]<>""){
@@ -463,7 +463,7 @@ if (index > 0){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -474,7 +474,7 @@ if (index > 0){
  				 $c=$a.$b.$a;
 								$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -487,7 +487,7 @@ if (index > 0){
  				 $c=$a.$b.$a;
 				$sqlclassid="acclassid=".$_POST[classid];
 
-				$sql="select * from jizhang_account where ".$sqlclassid." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqlclassid." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -497,7 +497,7 @@ if (index > 0){
 				$sqlclassid="acclassid=".$_POST[classid];
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from jizhang_account where ".$sqlclassid." and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from slt_account where ".$sqlclassid." and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -505,10 +505,10 @@ if (index > 0){
 			echo "
 				<table align='left' width='100%' height='20' border='0' align='left' cellpadding='5' cellspacing='1' bgcolor='#B3B3B3' class='table table-striped table-bordered'>
   <tr>
-  <td align='left' bgcolor='#EBEBEB'>　查询结果&nbsp;<font id='tongji'></font></td>
+  <td align='left' bgcolor='#EBEBEB'>　查询结果&nbsp;<font id='stat'></font></td>
   </tr>
 </table>
-<form action='shanchu.php' method='post'>
+<form action='delete.php' method='post'>
  <table id='excel' class='table table-striped' width='100%' border='0' align='left' cellpadding='5' cellspacing='1' bgcolor='#B3B3B3'>
                 <tr>
                 <th bgcolor='#EBEBEB'>分类</th>
@@ -516,14 +516,14 @@ if (index > 0){
                 <th bgcolor='#EBEBEB'>收支</th>
                 <th bgcolor='#EBEBEB'>时间</th>
                 <th bgcolor='#EBEBEB'>备注</th>
-				<th bgcolor='#EBEBEB'><a href='javascript:select()'>全选</a> | <a href='javascript:fanselect()'>反选</a> | <a href='javascript:noselect()'>不选</a> <input type='submit' name='shanchu' value='删除'/></th>
+				<th bgcolor='#EBEBEB'><a href='javascript:select()'>全选</a> | <a href='javascript:fanselect()'>反选</a> | <a href='javascript:noselect()'>不选</a> <input type='submit' name='delete' value='删除'/></th>
                 </tr>
 				";
 			
 			
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from jizhang_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 				echo "<tr>";
@@ -542,7 +542,7 @@ $income=$income+$row[acmoney];
                echo "<td align='left' class='xl28' bgcolor='#FFFFFF'><font color='red'>". $row[acremark] ."</font></td>";
 $spending=$spending+$row[acmoney];    
 			}
-		  echo "<td align='left' bgcolor='#FFFFFF'><a href=xiugai.php?id=".$row['acid'].">编辑</a> <a href=shanchu.php?id=".$row['acid'].">删除</a>
+		  echo "<td align='left' bgcolor='#FFFFFF'><a href=edit.php?id=".$row['acid'].">编辑</a> <a href=delete.php?id=".$row['acid'].">删除</a>
 				<input name='del_id[]' type='checkbox' id='del_id[]' value=".$row['acid']." /></td>"; 
 	echo "</tr>";
 }
@@ -556,11 +556,11 @@ $spending=$spending+$row[acmoney];
 	
 	
 <script language="javascript">
-document.getElementById("tongji").innerHTML="<?='总共收入<font color=blue> '.$income.'</font> 总共支出 <font color=red>'.$spending.'</font>'?>"
+document.getElementById("stat").innerHTML="<?='总共收入<font color=blue> '.$income.'</font> 总共支出 <font color=red>'.$spending.'</font>'?>"
 </script>
 
  
 
 <?php
-    include_once("xiamian.php");
+    include_once("footer.php");
 ?>

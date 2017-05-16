@@ -21,12 +21,12 @@ if(indatabase($db_dbname,$conn)){
 		
 	}
 }
-echo "创建表 jizhang_account .....";
+echo "创建表 slt_account .....";
 if(intable($db_dbname,$qianzui."account",$conn)){
 	echo "已存在<br /><font color='red'>已经安装过啦，表前缀已经存在。</font></body></html>";
 	
 }else{
-	$sql = "CREATE TABLE `$db_dbname`.`jizhang_account` (`acid` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `acmoney` INT(5) NOT NULL, `acclassid` INT(8) NOT NULL, `actime` INT(11) NOT NULL, `acremark` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `jiid` INT(8) NOT NULL, `zhifu` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$sql = "CREATE TABLE `$db_dbname`.`slt_account` (`acid` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `acmoney` INT(5) NOT NULL, `acclassid` INT(8) NOT NULL, `actime` INT(11) NOT NULL, `acremark` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `jiid` INT(8) NOT NULL, `zhifu` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci";
 	$query=mysql_query($sql);
 	if($query){
 	echo "成功<br />";
@@ -36,12 +36,12 @@ if(intable($db_dbname,$qianzui."account",$conn)){
 		
 	}
 }
-echo "创建表 jizhang_account_class .....";
+echo "创建表 slt_account_class .....";
 if(intable($db_dbname,$qianzui."account_class",$conn)){
 	echo "已存在<br /><font color='red'>已经安装过啦，表前缀已经存在。</font></body></html>";
 	
 }else{
-	$sql = "CREATE TABLE `$db_dbname`.`jizhang_account_class` (`classid` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, `classname` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `classtype` INT(1) NOT NULL, `ufid` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
+	$sql = "CREATE TABLE `$db_dbname`.`slt_account_class` (`classid` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, `classname` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `classtype` INT(1) NOT NULL, `ufid` INT(8) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
 	$query=mysql_query($sql);
 	if($query){
 	echo "成功<br />";
@@ -51,12 +51,12 @@ if(intable($db_dbname,$qianzui."account_class",$conn)){
 	}
 }
 
-echo "创建表 jizhang_user .....";
+echo "创建表 slt_user .....";
 if(intable($db_dbname,$qianzui."user",$conn)){
 	echo "已存在<br /><font color='red'>已经安装过啦，表前缀已经存在。</font></body></html>";
 	
 }else{
-	$sql = "CREATE TABLE `$db_dbname`.`jizhang_user` (`uid` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, `username` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `password` VARCHAR(35) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `email` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `utime` INT(11) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
+	$sql = "CREATE TABLE `$db_dbname`.`slt_user` (`uid` INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, `username` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `password` VARCHAR(35) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `email` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `utime` INT(11) NOT NULL) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
 	$query=mysql_query($sql);
 	if($query){
 	echo "成功<br />";
@@ -66,16 +66,16 @@ if(intable($db_dbname,$qianzui."user",$conn)){
 }
 
 echo "<br />加入默认用户.....";
-$sql="select * from jizhang_user where username='admin'";
+$sql="select * from slt_user where username='admin'";
 	$query=mysql_query($sql);
 	$attitle=is_array($row=mysql_fetch_array($query));
 	if($attitle){
-		echo "默认用户已存在！<br /><a href='denglu.php'>点这里立即登录</a>";
+		echo "默认用户已存在！<br /><a href='login.php'>点这里立即登录</a>";
 		exit();
 	}else{
 	$utime=strtotime("now");
 	
-$sql="insert into jizhang_user (username, password,email,utime) values ('admin', 'a4341a98cc97458bc1f817b4acd9ef6a','25812739@qq.com','$utime')";
+$sql="insert into slt_user (username, password,email,utime) values ('admin', 'a4341a98cc97458bc1f817b4acd9ef6a','25812739@qq.com','$utime')";
 $query=mysql_query($sql);
 if($query){
 	echo "Ok了！<br />使用用户名：admin 密码：xpttcom 即可登录<br />";
@@ -85,7 +85,7 @@ if($query){
 
 }
 ?>
-<br /><a href="denglu.php">点这里立即登录</a>
+<br /><a href="login.php">点这里立即登录</a>
 </p>
 
 </body>
