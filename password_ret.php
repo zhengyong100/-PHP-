@@ -1,13 +1,15 @@
 <html>
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>php mysql 简单记账xptt程序 - 修改密码</title>
+  <title>记账多用户版 - 修改密码</title>
  </head>
 <?php
+session_start();
+unset($_SESSION['user_shell']);
 include_once("config.php");//连接数据库 
  
 $token = stripslashes(trim($_GET['token'])); 
 $email = stripslashes(trim($_GET['email'])); 
-$sql = "select * from `slt_user` where email='$email'"; 
+$sql = "select * from `".$qianzui."user` where email='$email'"; 
  
 $query = mysql_query($sql); 
 $row = mysql_fetch_array($query); 
@@ -37,7 +39,7 @@ if($row){
            if($_POST[password]<>""){
              $umima=md5($_POST[password]);
              $uid=$row['uid'];
-      $sql="update slt_user set password='$umima' where uid='$uid'";
+      $sql="update ".$qianzui."user set password='$umima' where uid='$uid'";
       $query=mysql_query($sql);
       if($query){
         echo "<font color='green'>OK，修改成功！需要重新登陆，马上为你跳转。。</font><meta http-equiv=refresh content='2; url=index.php'>";

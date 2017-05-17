@@ -34,7 +34,7 @@ $spending=0;
 //检查是否记账并执行
 if($_GET[Submit]){
 	$time100=strtotime($_GET[time]);
-	$sql="insert into slt_account (acmoney, acclassid, actime, acremark,jiid,zhifu) values ('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
+	$sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,jiid,zhifu) values ('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
 	$query=mysql_query($sql);
 	if($query)
 		$prompttext="<font color='#009900'>OK，记完了！</font>";
@@ -52,7 +52,7 @@ if($_GET[Submit]){
           　<font color="red">金额：</font><input name="money" type="text" id="money" size="8" /><div style="display:none;"><input name="zhifu" type="text" id="zhifu" value="2" size="8" /></div>
           　<font color="red">分类：</font><select name="classid" id="classid" style="height:26px;">
               <?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -77,7 +77,7 @@ if($_GET[Submit]){
          　<font color="MediumSeaGreen">分类：</font>
             <select name="classid" id="classid" style="height:26px;">
               <?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -111,7 +111,7 @@ $p = $_GET['p']?$_GET['p']:1;
 $offset = ($p-1)*$pagesize;
 
 //查询本页显示的数据
-$query_sql = "SELECT * FROM slt_account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
+$query_sql = "SELECT * FROM ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
 $query=mysql_query($query_sql);
 
 			echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1' bgcolor='#B3B3B3' class='table table-striped table-bordered'>
@@ -129,7 +129,7 @@ $query=mysql_query($query_sql);
 }
 
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 
@@ -158,7 +158,7 @@ echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1
 			
 //分页代码
 //计算总数
-$count_result = mysql_query("SELECT count(*) as count FROM slt_account where jiid='$_SESSION[uid]'");
+$count_result = mysql_query("SELECT count(*) as count FROM ".$qianzui."account where jiid='$_SESSION[uid]'");
 $count_array = mysql_fetch_array($count_result);
 
 //计算总的页数
@@ -186,12 +186,12 @@ echo "</td></tr></table>";
 
 	<?php
 			
-				$sql="select * from slt_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 				

@@ -95,7 +95,7 @@ var daochu = (function() {
               <option value="quan">全部分类</option>
               <option value="sr">收入--</option>
 			  <?php
-			  	$sqlshouru="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='1'";
+			  	$sqlshouru="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='1'";
 				$queryshouru=mysql_query($sqlshouru);
 				while($rowshouru = mysql_fetch_array($queryshouru)){
 					echo "<option value='$rowshouru[classid]'>------$rowshouru[classname]</option>";
@@ -103,7 +103,7 @@ var daochu = (function() {
 			  ?>
 		<option value="zc">支出--</option>
 				<?php
-			  	$sqlzhichu="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='2'";
+			  	$sqlzhichu="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='2'";
 				$queryzhichu=mysql_query($sqlzhichu);
 				while($rowzhichu = mysql_fetch_array($queryzhichu)){
 					echo "<option value='$rowzhichu[classid]'>------$rowzhichu[classname]</option>";
@@ -141,26 +141,26 @@ var daochu = (function() {
  				 $a="%";
  				 $b =$_POST[beizhu];
  				 $c=$a.$b.$a;
- 				 $sql="select * from slt_account where acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+ 				 $sql="select * from ".$qianzui."account where acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//什么都没填
 			if($_POST[classid]=="quan" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
-				$sql="select * from slt_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//只查询分类
 			if($_POST[classid]<>"quan" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				$sqlclassid="acclassid=".$_POST[classid];
-				$sql="select * from slt_account where ".$sqlclassid." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqlclassid." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			
 			//只查询分类收
 			if($_POST[classid]=="zc" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				
-				$sql="select * from slt_account where zhifu='2' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='2' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			if($_POST[classid]=="sr" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]==""){
 				
-				$sql="select * from slt_account where zhifu='1' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='1' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			}
 			//只查询分类支
 		
@@ -168,13 +168,13 @@ var daochu = (function() {
 			if($_POST[classid]=="quan" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
-				$sql="select * from slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="quan" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
-				$sql="select * from slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//------------------------------
@@ -186,7 +186,7 @@ var daochu = (function() {
 				$sqlclassid="acclassid=".$_POST[classid];
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where ".$sqlclassid." and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqlclassid." and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//----------------------------------------
@@ -198,7 +198,7 @@ var daochu = (function() {
  				 $c=$a.$b.$a;
 				
 
-				$sql="select * from slt_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]=="" && $_POST[time2]=="" && $_POST[beizhu]<>""){
@@ -208,7 +208,7 @@ var daochu = (function() {
  				 $c=$a.$b.$a;
 				
 
-				$sql="select * from slt_account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -218,7 +218,7 @@ var daochu = (function() {
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]==""){
@@ -226,7 +226,7 @@ var daochu = (function() {
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			//查询收支，日期，备注
@@ -238,7 +238,7 @@ var daochu = (function() {
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			if($_POST[classid]=="zc" && $_POST[time1]<>"" && $_POST[time2]<>"" && $_POST[beizhu]<>""){
@@ -249,7 +249,7 @@ var daochu = (function() {
 				
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where zhifu='$type' and ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -260,7 +260,7 @@ var daochu = (function() {
  				 $c=$a.$b.$a;
 								$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqltime." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -273,7 +273,7 @@ var daochu = (function() {
  				 $c=$a.$b.$a;
 				$sqlclassid="acclassid=".$_POST[classid];
 
-				$sql="select * from slt_account where ".$sqlclassid." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqlclassid." and acremark like '$c' and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -283,7 +283,7 @@ var daochu = (function() {
 				$sqlclassid="acclassid=".$_POST[classid];
 				$sqltime=" actime >".strtotime($_POST[time1]." 0:0:0")." and actime <".strtotime($_POST[time2]." 23:59:59");
 
-				$sql="select * from slt_account where ".$sqlclassid." and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where ".$sqlclassid." and ".$sqltime." and jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			}
 			
@@ -308,7 +308,7 @@ var daochu = (function() {
 			
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 				echo "<tr>";

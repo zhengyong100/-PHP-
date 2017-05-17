@@ -19,14 +19,14 @@ if($_GET[Submit]){
 			if($value==""||$path1==""){
 		echo "<script type='text/javascript'>alert('添加成功，空数据自动跳过！');window.location='batch_add.php';</script>"; exit;
 	}	
-        $query=mysql_query("insert into slt_account (acmoney, acclassid, actime, acremark,zhifu,jiid) values('$value','".$path1[$key]."','$time100','".$path3[$key]."','".$path4[$key]."','$_SESSION[uid]')");
+        $query=mysql_query("insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,zhifu,jiid) values('$value','".$path1[$key]."','$time100','".$path3[$key]."','".$path4[$key]."','$_SESSION[uid]')");
 		
 		
-        //$sql="insert into slt_account (acmoney, acclassid, actime, acremark,zhifu,jiid) values('$path','$path1','$path2','$path3','$path4','$_SESSION[uid]')";
+        //$sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,zhifu,jiid) values('$path','$path1','$path2','$path3','$path4','$_SESSION[uid]')";
 		//$query=mysql_query($sql);
 	
 	 }
-	// $sql="insert into slt_account (acmoney, acclassid, actime, acremark,jiid,zhifu) values('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
+	// $sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,jiid,zhifu) values('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
 	// $query=mysql_query($sql);
 		if($query){
         echo "<script type='text/javascript'>alert('添加成功！');window.location='batch_add.php';</script>";
@@ -54,7 +54,7 @@ $(AddButton).click(function (e)  //on add input button click
             FieldCount++; //text box added increment
             //add input box
             $(InputsWrapper).append('<div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" id="classid" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid=$_SESSION[uid]";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid=$_SESSION[uid]";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value=$acclass[classid]>$acclass[classname]</option>";
@@ -76,7 +76,7 @@ $(AddButton1).click(function (e)  //on add input button click
             FieldCount++; //text box added increment
             //add input box
             $(InputsWrapper1).append('<div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" id="classid" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid=$_SESSION[uid]";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid=$_SESSION[uid]";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value=$acclass[classid]>$acclass[classname]</option>";
@@ -108,7 +108,7 @@ return false;
 <form id="myform2" name="myform2" method="get" action="" onsubmit="return checkpost2();">
 <div id="InputsWrapper1">  
 <div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -116,7 +116,7 @@ return false;
 		  ?></select><font color="red"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -124,7 +124,7 @@ return false;
 		  ?></select><font color="red"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -132,7 +132,7 @@ return false;
 		  ?></select><font color="red"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -140,7 +140,7 @@ return false;
 		  ?></select><font color="red"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="2" style="display:none;"/><font color="red">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="red"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=2 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=2 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -157,7 +157,7 @@ return false;
 <form id="myform1" name="myform1" method="get" action="" onsubmit="return checkpost();">
 <div id="InputsWrapper">  
 <div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -165,7 +165,7 @@ return false;
 		  ?></select><font color="MediumSeaGreen"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -173,7 +173,7 @@ return false;
 		  ?></select><font color="MediumSeaGreen"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -181,7 +181,7 @@ return false;
 		  ?></select><font color="MediumSeaGreen"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -189,7 +189,7 @@ return false;
 		  ?></select><font color="MediumSeaGreen"> 备注：</font><input name="remark[]" type="text" style="width:120px;"/> 时间：<input type="text" name="time[]" value="<?php echo date("Y-m-d H:i"); ?>" style="width:120px;"/><a href="#" class="removeclass"> 删除</a><br /><br /></div>  
 </div>
 <div><input name="zhifu[]" id="zhifu" type="text" value="1" style="display:none;"/><font color="MediumSeaGreen">金额：</font><input type="text" name="money[]" id="money" value="" style="width:70px;"/><font color="MediumSeaGreen"> 分类：</font><select name="classid[]" style="height:26px;"><?php
-		  	$sql="select * from slt_account_class where classtype=1 and ufid='$_SESSION[uid]'";
+		  	$sql="select * from ".$qianzui."account_class where classtype=1 and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
 				echo "<option value='$acclass[classid]'>$acclass[classname]</option>";
@@ -221,7 +221,7 @@ $p = $_GET['p']?$_GET['p']:1;
 $offset = ($p-1)*$pagesize;
 
 //查询本页显示的数据
-$query_sql = "SELECT * FROM slt_account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
+$query_sql = "SELECT * FROM ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
 $query=mysql_query($query_sql);
 
 			echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1' bgcolor='#B3B3B3' class='table table-striped table-bordered'>
@@ -239,7 +239,7 @@ $query=mysql_query($query_sql);
 }
 
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 
@@ -268,7 +268,7 @@ echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1
 			
 //分页代码
 //计算总数
-$count_result = mysql_query("SELECT count(*) as count FROM slt_account where jiid='$_SESSION[uid]'");
+$count_result = mysql_query("SELECT count(*) as count FROM ".$qianzui."account where jiid='$_SESSION[uid]'");
 $count_array = mysql_fetch_array($count_result);
 
 //计算总的页数
@@ -296,12 +296,12 @@ echo "</td></tr></table>";
 
 	<?php
 			
-				$sql="select * from slt_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 				

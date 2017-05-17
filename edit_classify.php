@@ -11,12 +11,12 @@
     <td align="left" valign="top">
 	<?php
 		//查询当前分类信息
-		$sql="select * from slt_account_class where classid='$_GET[classid]' and ufid='$_SESSION[uid]'";
+		$sql="select * from ".$qianzui."account_class where classid='$_GET[classid]' and ufid='$_SESSION[uid]'";
 		$query=mysql_query($sql);
 		$cuclass = mysql_fetch_array($query);
 		//执行操作--修改分类名称
 		if($_GET[Submit]){
-			$sql="update slt_account_class set classname= '$_GET[classname2]' where classid='$_GET[classid]' and ufid='$_SESSION[uid]'";
+			$sql="update ".$qianzui."account_class set classname= '$_GET[classname2]' where classid='$_GET[classid]' and ufid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			if($query){
 				echo "分类名称修改成功！</td></tr></table> 2秒后自动返回<meta http-equiv=refresh content='2; url=classify.php'>";
@@ -28,10 +28,10 @@
 		}
 		//执行操作--转移分类
 		if($_GET[Submit2]){
-			$sql="select * from slt_account where acclassid= '$_GET[classid]' and jiid='$_SESSION[uid]'";
+			$sql="select * from ".$qianzui."account where acclassid= '$_GET[classid]' and jiid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="update slt_account set acclassid= '$_GET[toclassid]' where acid= '$row[acid]' and jiid='$_SESSION[uid]'";
+				$sql="update ".$qianzui."account set acclassid= '$_GET[toclassid]' where acid= '$row[acid]' and jiid='$_SESSION[uid]'";
 				mysql_query($sql);
 			}
 			echo "转移完成，你可以查询此分类下是否还有记录，已确认是否全部转移成功！</td></tr></table> 2秒后自动返回<meta http-equiv=refresh content='2; url=classify.php'>";
@@ -39,13 +39,13 @@
 		}
 		//执行操作--删除分类
 		if($_GET[Submit3]){
-			$sql="select * from slt_account where acclassid='$_GET[classid]' and jiid='$_SESSION[uid]'";
+			$sql="select * from ".$qianzui."account where acclassid='$_GET[classid]' and jiid='$_SESSION[uid]'";
 			$query=mysql_query($sql);
 			if($row=mysql_fetch_array($query)){
 				echo "<font color='red'>无法删除！在此分类下有账目，请将账目转移到其他分类。</font></td></tr></table> 2秒后自动返回<meta http-equiv=refresh content='2; url=classify.php'>";
 				exit();
 			}else{
-				$sql="delete from slt_account_class where classid=".$_GET[classid];
+				$sql="delete from ".$qianzui."account_class where classid=".$_GET[classid];
 				if(mysql_query($sql))
 					echo "分类删除成功！</td></tr></table> 2秒后自动返回<meta http-equiv=refresh content='2; url=classify.php'>";
 				else
@@ -80,7 +80,7 @@
             <label>转移到
             <select name="toclassid" id="toclassid">
 			  <?php
-			  	$sql="select * from slt_account_class where classtype=$cuclass[classtype] and ufid='$_SESSION[uid]'";
+			  	$sql="select * from ".$qianzui."account_class where classtype=$cuclass[classtype] and ufid='$_SESSION[uid]'";
 				$query=mysql_query($sql);
 				while($row = mysql_fetch_array($query)){
 					echo "<option value='$row[classid]'>$row[classname]</option>";

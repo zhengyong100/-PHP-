@@ -1,4 +1,5 @@
 <?php
+session_start();
     include_once("header.php");
 ?>
 
@@ -11,7 +12,7 @@
           
            <form action="" method="post" name="submitxiugai">
 
-        <?php $sqlzhanghu = "SELECT * FROM slt_user where uid='$_SESSION[uid]'";
+        <?php $sqlzhanghu = "SELECT * FROM ".$qianzui."user where uid='$_SESSION[uid]'";
         $result2 = mysql_query($sqlzhanghu);
 $row = mysql_fetch_array($result2);
          ?>
@@ -43,10 +44,11 @@ $row = mysql_fetch_array($result2);
         }else{
           $umima=$jiumima;
         }
-      $sql="update slt_user set password='$umima',email='$_POST[email]' where uid='$_SESSION[uid]'";
+      $sql="update ".$qianzui."user set password='$umima',email='$_POST[email]' where uid='$_SESSION[uid]'";
       $query=mysql_query($sql);
       if($query){
-        echo "<font color='green'>OK，修改成功！需要重新登陆，马上为你跳转。。</font><meta http-equiv=refresh content='2; url=index.php'>";
+		  unset($_SESSION['user_shell']);
+        echo "<font color='green'>OK，修改成功！需要重新登陆，马上为你跳转。。</font><meta http-equiv=refresh content='2; url=login.php'>";
       }else{
         echo "<font color='red'>出错啦，写入数据库时出错！</font>";
     
@@ -71,7 +73,7 @@ $row = mysql_fetch_array($result2);
           <td bgcolor="#EBEBEB">　清空全部数据</td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF">
+          <td bgcolor="#FFFFFF"><form action="" method="post" name="submitdel">
 		  密码：<input type="password" name="mimayanzheng" id="mimayanzheng" size="18" maxlength="15" /> （操作前请备份导出）<br /><br />
 		  <input name="shangchushuju" type="submit" value="清除全部数据" class="btn btn-default" />
 		<?php 
@@ -86,7 +88,7 @@ $row = mysql_fetch_array($result2);
 		}
 ?>
 		<br /><br />
-		  
+		  </form>
           </td>
         </tr>		  
      </table>   

@@ -8,7 +8,7 @@
 <form id="form" name="form1" method="post" action="">
 <select name="nian" id="nian" onchange="window.location.href='annual_stat.php?nian='+this.value;options[selectedIndex].value;onchange=save()">
 
-<?php $sqlzhanghu = "SELECT * FROM slt_account where jiid='$_SESSION[uid]' order by actime limit 1"; //order by actime limit 1
+<?php $sqlzhanghu = "SELECT * FROM ".$qianzui."account where jiid='$_SESSION[uid]' order by actime limit 1"; //order by actime limit 1
         $result2 = mysql_query($sqlzhanghu);
 $row = mysql_fetch_array($result2);
 $ntjnian=date("Y",$row[actime]);
@@ -27,7 +27,7 @@ echo "<option value='$ntjnian'>$ntjnian</option>";
 //收入分类
 
 $shouru =array();
-$sqlshouru="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='1'";
+$sqlshouru="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='1'";
 				$queryshouru=mysql_query($sqlshouru);
 				while($rowshouru = mysql_fetch_array($queryshouru)){
 $cid = $rowshouru[classid];
@@ -39,7 +39,7 @@ $shouru["$cid"]=$rowshouru[classid];
 
 //支出分类
 $zhichu=array();
-$sqlshouru="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='2'";
+$sqlshouru="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='2'";
 
 				$queryshouru=mysql_query($sqlshouru);
 
@@ -65,9 +65,9 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>月收
 if($_GET[nian]==""){if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-1-31";
 $k="$ntjxz-1-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -86,7 +86,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -124,11 +124,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys1
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-2-28";
 $k="$ntjxz-2-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -147,7 +147,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -183,11 +183,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys2
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-3-31";
 $k="$ntjxz-3-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -206,7 +206,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -241,11 +241,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys3
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-4-30";
 $k="$ntjxz-4-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -264,7 +264,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -298,11 +298,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys4
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-5-31";
 $k="$ntjxz-5-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -321,7 +321,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -356,11 +356,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys5
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-6-30";
 $k="$ntjxz-6-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -379,7 +379,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -415,11 +415,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys6
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-7-31";
 $k="$ntjxz-7-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -438,7 +438,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -474,11 +474,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys7
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-8-31";
 $k="$ntjxz-8-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -497,7 +497,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -532,11 +532,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys8
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-9-30";
 $k="$ntjxz-9-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -555,7 +555,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -593,11 +593,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys9
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-10-31";
 $k="$ntjxz-10-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -616,7 +616,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -653,11 +653,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys1
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-11-30";
 $k="$ntjxz-11-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -676,7 +676,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -712,11 +712,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys1
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-12-31";
 $k="$ntjxz-12-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -735,7 +735,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){
@@ -771,11 +771,11 @@ echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$ys1
 if($_GET[nian]==""){$ntjxz=date("Y");}else{$ntjxz=$_GET[nian];}
 $j="$ntjxz-12-31";
 $k="$ntjxz-1-1";
-$sqltime=" slt_account.actime >".strtotime($k." 0:0:0")." and slt_account.actime <".strtotime($j." 23:59:59");
+$sqltime=" ".$qianzui."account.actime >".strtotime($k." 0:0:0")." and ".$qianzui."account.actime <".strtotime($j." 23:59:59");
 //收入分类
 
 //收入分类
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =1 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $query=mysql_query($sql);
 $s1=array();
 			while($acclass=mysql_fetch_array($query)){
@@ -794,7 +794,7 @@ echo "</tr>";
 }
 //支出分类
 
-$sql="select sum(acmoney) as total,acclassid,slt_account_class.classname from slt_account left join slt_account_class on slt_account.acclassid =slt_account_class.classid where slt_account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by slt_account.acclassid";
+$sql="select sum(acmoney) as total,acclassid,".$qianzui."account_class.classname from ".$qianzui."account left join ".$qianzui."account_class on ".$qianzui."account.acclassid =".$qianzui."account_class.classid where ".$qianzui."account_class.classtype =2 and ".$sqltime." and jiid='$_SESSION[uid]' group by ".$qianzui."account.acclassid";
 $s2=array();
 $query=mysql_query($sql);
 			while($acclass=mysql_fetch_array($query)){

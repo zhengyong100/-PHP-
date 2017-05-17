@@ -13,13 +13,13 @@ function checkpost()
 </script>
 <?php
 if($_GET["Submit"]){
-	$sql="select * from slt_account_class where classname='$_GET[classname]' and ufid='$_SESSION[uid]'";
+	$sql="select * from ".$qianzui."account_class where classname='$_GET[classname]' and ufid='$_SESSION[uid]'";
 	$query=mysql_query($sql);
 	$attitle=is_array($row=mysql_fetch_array($query));
 	if($attitle){
 		$status_text="此分类名称已存在！";
 	}else{
-		$sql="insert into slt_account_class (classname, classtype,ufid) values ('$_GET[classname]', '$_GET[classtype]',$_SESSION[uid])";
+		$sql="insert into ".$qianzui."account_class (classname, classtype,ufid) values ('$_GET[classname]', '$_GET[classtype]',$_SESSION[uid])";
 		$query=mysql_query($sql);
 		if($query){
 			$status_text="<font color=#00CC00>添加成功！</font>";
@@ -68,7 +68,7 @@ echo "<meta http-equiv=refresh content='0; url=classify.php'>";
               <th align="left" bgcolor="#EBEBEB">操作</th>
             </tr>
 			<?php 
-			$sql="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='1'";
+			$sql="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='1'";
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
 			  echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='MediumSeaGreen'>".$row[classname]."</font></td>";
@@ -89,7 +89,7 @@ echo "<meta http-equiv=refresh content='0; url=classify.php'>";
               <th align="left" bgcolor="#EBEBEB">操作</th>
             </tr>
 			<?php 
-			$sql="select * from slt_account_class where ufid='$_SESSION[uid]' and classtype='2'";
+			$sql="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classtype='2'";
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
 			  echo "<tr><td align='left' bgcolor='#FFFFFF'><font color='red'>".$row[classname]."</font></td>";

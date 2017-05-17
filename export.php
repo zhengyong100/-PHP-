@@ -27,7 +27,7 @@ if ($action == 'import') { //导入CSV
 	echo "<script type='text/javascript'>alert('你的文件没有任何数据！');window.location='search.php';</script>";
     exit;
   }
-/* $sqlchongfu=mysql_query("select actime from slt_account where jiid='$_SESSION[uid]'");
+/* $sqlchongfu=mysql_query("select actime from ".$qianzui."account where jiid='$_SESSION[uid]'");
   while($chongfu=mysql_fetch_array($sqlchongfu)){
   if($chongfu[actime]==$timechongfu){
     echo '数据重复提交！';
@@ -39,18 +39,18 @@ if ($action == 'import') { //导入CSV
     $classify = iconv('gb2312', 'utf-8', $result[$i][0]); //中文转码
     $shouzhi = iconv('gb2312', 'utf-8', $result[$i][1]);
     if($shouzhi=="收入"){$shouzhi="1";}else{$shouzhi="2";}
-    $sqlclassify="select * from slt_account_class where classname='$classify' and ufid='$_SESSION[uid]'";
+    $sqlclassify="select * from ".$qianzui."account_class where classname='$classify' and ufid='$_SESSION[uid]'";
   $queryclassify=mysql_query($sqlclassify);
   $attitle=is_array($rowclassify=mysql_fetch_array($queryclassify));
   if($attitle){
-    $sqlclassid="select * from slt_account_class where ufid='$_SESSION[uid]' and classname='$classify'";
+    $sqlclassid="select * from ".$qianzui."account_class where ufid='$_SESSION[uid]' and classname='$classify'";
         $queryclassid=mysql_query($sqlclassid);
         while($rowclassid = mysql_fetch_array($queryclassid)){
           $acclassid=$rowclassid[classid];
         }
     
   }else{
-    $sqladd="insert into slt_account_class (classname, classtype,ufid) values ('$classify', '$shouzhi',$_SESSION[uid])";
+    $sqladd="insert into ".$qianzui."account_class (classname, classtype,ufid) values ('$classify', '$shouzhi',$_SESSION[uid])";
     $queryadd=mysql_query($sqladd);
     $acclassid=mysql_insert_id();
   }
@@ -62,7 +62,7 @@ if ($action == 'import') { //导入CSV
   }
   $data_values = substr($data_values,0,-1); //去掉最后一个逗号
   fclose($handle); //关闭指针
-  $query = mysql_query("insert slt_account (acmoney,acclassid,actime,acremark,jiid,zhifu) values $data_values");//批量插入数据表中
+  $query = mysql_query("insert ".$qianzui."account (acmoney,acclassid,actime,acremark,jiid,zhifu) values $data_values");//批量插入数据表中
   if($query){
 	echo "<meta charset='UTF-8'>";
 	$d="导入成功！导入了";
@@ -75,11 +75,11 @@ if ($action == 'import') { //导入CSV
 	echo "<script type='text/javascript'>alert('$c');window.location='search.php';</script>";
   }
 } elseif ($action=='export') { //导出CSV
-    $result = mysql_query("select acclassid,zhifu,acmoney,actime,acremark from slt_account where jiid='$_SESSION[uid]'");
+    $result = mysql_query("select acclassid,zhifu,acmoney,actime,acremark from ".$qianzui."account where jiid='$_SESSION[uid]'");
     $str = "分类,收支,金额,时间,备注\n";
     $str = iconv('utf-8','gb2312',$str);
     while($row=mysql_fetch_array($result)){
-    $sql="select * from slt_account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
+    $sql="select * from ".$qianzui."account_class where classid=$row[acclassid] and ufid='$_SESSION[uid]'";
         $classquery=mysql_query($sql);
         $classinfo = mysql_fetch_array($classquery);
         $classify = iconv('utf-8','gb2312',$classinfo['classname']);

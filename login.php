@@ -1,122 +1,168 @@
-<?php session_start();
+<?php
+session_start();
+/*
+if(isset($_SESSION['user_shell']))
+{
+echo "<script language='javascript' type='text/javascript'>window.location.href='add.php'</script>";
+}
+*/
 ?>
-<html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记账多用户版</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-<title>php mysql 简单记账xptt程序</title>
+<link rel="stylesheet" type="text/css" href="css/default.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/styles.css">
 <style type="text/css">
-<!--
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size:12px;
-    color:#666666;
-    background:#fff;
-    text-align:center;
-
-}
-
-* {
-    margin:0;
-    padding:0;
-}
-
-a {
-    color:#1E7ACE;
-    text-decoration:none;    
-}
-
-a:hover {
-    color:#000;
-    text-decoration:underline;
-}
-h3 {
-    font-size:14px;
-    font-weight:bold;
-}
-
-pre,p {
-    color:#1E7ACE;
-    margin:4px;
-}
-input, select,textarea {
-    padding:1px;
-    margin:2px;
-    font-size:11px;
-}
-.buttom{
-    padding:1px 10px;
-    font-size:12px;
-    border:1px #1E7ACE solid;
-    background:#D0F0FF;
-}
-#formwrapper {
-    width:450px;
-    margin:15px auto;
-    padding:20px;
-    text-align:left;
-    border:1px #1E7ACE solid;
-}
-
-fieldset {
-    padding:10px;
-    margin-top:5px;
-    border:1px solid #1E7ACE;
-    background:#fff;
-}
-
-fieldset legend {
-    color:#1E7ACE;
-    font-weight:bold;
-    padding:3px 20px 3px 20px;
-    border:1px solid #1E7ACE;    
-    background:#fff;
-}
-
-fieldset label {
-    float:left;
-    width:120px;
-    text-align:right;
-    padding:4px;
-    margin:1px;
-}
-
-fieldset div {
-    clear:left;
-    margin-bottom:2px;
-}
-
-.enter{ text-align:center;}
-.clear {
-    clear:both;
-}
-
--->
+/* <![CDATA[ */
+#tab-title .selected{color:#f00;font-weight:bold}
+#tab-title span{padding:0 18px 8px 0;cursor:pointer;}
+#tab-content .hide{display:none;}
+#tab-content ul{overflow:hidden;list-style:none}
+#tab-content ul li{overflow:hidden;border-top: 1px dotted #DDDDDD;line-height: 2.1em;padding: 0 1px;}
+#tab-content ul li span{color:#A1A3A6;}
+.tishi{position:absolute;bottom:10px;}
+/* ]]> */
 </style>
+
 </head>
 <body>
-<?php include("config.php"); ?>
-<div id="formwrapper">
+<?php
+include("config.php"); 
+?>
 
-<h3>已注册用户登录</h3>
-    <form action="" method="post">
-    <fieldset>
-        <legend>用户登录</legend>
-        <div>
-            <label for="Name">用户名</label>
-            <input type="text" name="username" id="username" size="18" maxlength="30" /><br />
-        </div>
-        <div>
-            <label for="password">密码</label>
-            <input type="password" name="password" id="password" size="18" maxlength="15" /><br />
-        </div>
-        <div class="enter">
-           
-            <input name="submit" type="submit" class="buttom" value="登录" /> <?php
+
+<script type="text/javascript">
+  //tab
+jQuery(document).ready(function(){
+jQuery('#tab-title span').click(function(){
+  jQuery(this).addClass("selected").siblings().removeClass();
+  jQuery("#tab-content > ul").slideUp('0').eq(jQuery('#tab-title span').index(this)).slideDown('0');
+});
+});
+</script>
+<div class='login'>
+  <div class='login_title'>
+  <div id="tab-title"><h3><span class="selected">登录</span><span>注册</span><span>忘记密码</span></h3></div>
+  </div>
+
+  <div id="tab-content">
+  
+  
+
+  <ul>
+ <form action="" method="post">
+  <div class='login_fields'>
+
+  <div class='login_fields__user'>
+    <div class='icon'>
+    <img src='img/user_icon_copy.png'>
+    </div>
+    <input placeholder='用户名' type='text' id='username' name='username'>
+    <div class='validation'>
+      <img src='img/tick.png'>
+    </div>
+    </input>
+  </div>
+
+  <div class='login_fields__password'>
+    <div class='icon'>
+    <img src='img/lock_icon_copy.png'>
+    </div>
+    <input placeholder='密码' type='password' id='password' name='password'>
+    <div class='validation'>
+    <img src='img/tick.png'>
+    </div>
+  </div>
+
+  <div class='login_fields__submit'>
+    <input type='submit' value='登录' name='submit'>
+  </div>
+
+</div>
+    </form>           
+  </ul>
+              
+   <ul class="hide">
+  <form action="" method="post" name="submitzhuce">
+  <div class='login_fields'>
+
+  <div class='login_fields__user'>
+    <div class='icon'>
+    <img src='img/user_icon_copy.png'>
+    </div>
+    <input placeholder='用户名' type='text' id='username' name='username'>
+    <div class='validation'>
+      <img src='img/tick.png'>
+    </div>
+    </input>
+  </div>
+
+  <div class='login_fields__user'>
+    <div class='icon'>
+    <img src='img/user_icon_copy.png'>
+    </div>
+    <input placeholder='邮箱' type='text' name='email' id='email'>
+    <div class='validation'>
+      <img src='img/tick.png'>
+    </div>
+    </input>
+  </div>
+
+  <div class='login_fields__password'>
+    <div class='icon'>
+    <img src='img/lock_icon_copy.png'>
+    </div>
+    <input placeholder='密码' type='password' id='password' name='password'>
+    <div class='validation'>
+    <img src='img/tick.png'>
+    </div>
+  <div class='login_fields__submit'>
+    <input type='submit' value='提交' name='Submitzhuce'>
+  </div>
+</div>
+
+
+</div>
+</form>
+ </ul>
+   
+   <ul class="hide"> 
+<form action="" method="post">          
+  <div class='login_fields'>
+
+  <div class='login_fields__user'>
+    <div class='icon'>
+    <img src='img/user_icon_copy.png'>
+    </div>
+    <input placeholder='邮箱' type='text' name='email' id='email'>
+    <div class='validation'>
+      <img src='img/tick.png'>
+    </div>
+    </input>
+    <div class='login_fields__submit'>
+    <input type='submit' value='找回' name='submitmima'>
+    </div>
+  </div>
+</div>
+</form>
+              </ul>
+
+
+ </div> 
+<div class="tishi">
+<p>
+<?php
 if($_POST['submit']){
   $username=str_replace(" ","",$_POST['username']);
    //去除空格
-     $sql="SELECT * FROM slt_user WHERE username = '$username'";
+     $sql="SELECT * FROM ".$qianzui."user WHERE username = '$username'";
      $query=mysql_query($sql);
         $exist=is_array($row=mysql_fetch_array($query));
          //判断是否存在这样一个用户
@@ -126,106 +172,69 @@ if($_POST['submit']){
                $_SESSION['uid']=$row['uid'];
              // session赋值
                 $_SESSION['user_shell']=md5($row['username'].$row['password']);
-                  echo "<br><font color='green'>登陆成功咯！稍等，努力穿越中...</font><meta http-equiv=refresh content='2; url=index.php'>";
-}else{   echo "<br><font color='red'>用户名或密码错误啦！</font>";  SESSION_DESTROY();  }  } ?>
-        </div>    
-        <div class="forgotpass"><a href="#">您忘记密码?</a></div>    
-    </fieldset>
-    </form><br />
-    <SCRIPT LANGUAGE=javascript RUNAT=Server>
-function isEmail(strEmail) {
-if (strEmail.search(/^w+((-w+)|(.w+))*@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+)*.[A-Za-z0-9]+$/) != -1)
-return true;
-else
-alert("请填写正确的邮箱地址！");
-}
-</SCRIPT>
-    <h3>未注册创建帐户</h3>
-    <form action="" method="post" name="submitzhuce">
-    <fieldset>
-        <legend>用户注册</legend>
-        <p><strong>您的电子邮箱不会被公布出去,但是必须填写.</strong>用来找回密码.</p>
-        <div>
-        <label for="Name">用户名</label>
-        <input type="text" name="username" id="username" value="" size="20" maxlength="30" /> 
-        *(最多30个字符)<br />    
-    </div>
-        <div>
-        <label for="Email">电子邮箱</label>
-        <input type="text" name="email" id="email" value="" size="20" maxlength="150" onblur=isEmail(this.value) /> *<br />    
-    </div>    
-        <div>
-        <label for="password">密码</label>
-        <input type="password" name="password" id="password" size="18" maxlength="15" /> 
-        *(最多15个字符)<br />
-    </div>
-        <div>
-        <br />
-    </div>
-     
-        <div class="enter">
-        <input name="Submitzhuce" type="submit" class="buttom" value="提交" /> <?php if($_POST[Submitzhuce]){
-        
-        
-        if ( empty($_POST[email])
+                  echo "<br><br><font color='green'>登陆成功咯！稍等，努力穿越中...</font><meta http-equiv=refresh content='0; url=add.php'>";
+}else{   echo "<br><br><font color='red'>用户名或密码错误啦！</font>";  SESSION_DESTROY();  }  } ?>              
+              
+ <?php if($_POST[Submitzhuce]){
+         if ( empty($_POST[email])
 || !ereg("^[-a-zA-Z0-9_.]+@([0-9A-Za-z][0-9A-Za-z-]+.)+[A-Za-z]{2,5}$",$_POST[email])
 ) {
-echo "<font color='red'>邮箱格式不正确！</font>";exit;
+echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
 
 } 
         
-        $sql="select * from slt_user where username='$_POST[username]' or email='$_POST[email]'";
+        $sql="select * from ".$qianzui."user where username='$_POST[username]' or email='$_POST[email]'";
   $query=mysql_query($sql);
   $attitle=is_array($row=mysql_fetch_array($query));
   if($attitle){
-    echo "<font color='red'>用户或则邮箱已存在！换一个吧！</font>";
+    echo "<br><br><font color='red'>用户或则邮箱已存在！换一个吧！</font>";
     exit();
   }else{
         $umima=md5($_POST[password]);
         $utime=strtotime("now");
-  $sql="insert into slt_user (username, password,email,utime) values ('$_POST[username]', '$umima', '$_POST[email]', '$utime')";
+  $sql="insert into ".$qianzui."user (username, password,email,utime) values ('$_POST[username]', '$umima', '$_POST[email]', '$utime')";
   $query=mysql_query($sql);
   if($query)
-    echo "<font color='green'>OK，你已经成功注册！在上面登录！</font>";
+  {
+    echo "<br><br><font color='green'>OK，你已经成功注册！随时可以登录！</font>";
+  }
   else
-    echo "<font color='red'>出错啦，写入数据库时出错！</font>";
+  {
+    echo "<br><br><font color='red'>出错啦，写入数据库时出错！</font>";
+  }
+  //给用户增加默认分类
+  $sql="select * from ".$qianzui."user where username='$_POST[username]'";
+  $query=mysql_query($sql);
+  $row = mysql_fetch_assoc($query);
+  $uid=$row['uid'];
+  $sql="insert into ".$qianzui."account_class (classname, classtype,ufid) values ('默认收入', '1','".$uid."'),('默认支出', '2','".$uid."')";
+$query=mysql_query($sql);
+if($query)
+  {
+    echo "<br><font color='green'>增加默认分类成功！</font>";
+  }
+  else
+  {
+    echo "<br><font color='red'>增加默认分类出错！</font>";
+  }
 }
 }
-?>
-    </div>
-
-        <p><strong></strong></p>    
-    </fieldset>
-    </form><br />
-    
-    
-    
-    <h3>找回密码</h3>
-    <form action="" method="post">
-    <fieldset>
-        <legend>找回密码</legend>
-        <div>
-            <label for="Name">邮箱</label>
-            <input type="text" name="email" id="email" size="18" maxlength="30" onblur=isEmail(this.value) /><br />
-        </div>
-        <div class="enter">
-           
-            <input name="submitmima" type="submit" class="buttom" value="提交" />
-            <?php
-            include('class.phpmailer.php'); 
-include('class.smtp.php'); 
+?>             
+              
+ <?php
   if($_POST['submitmima']){
-  
+   include('class.phpmailer.php'); 
+include('class.smtp.php'); 
   if ( empty($_POST[email])
 || !ereg("^[-a-zA-Z0-9_.]+@([0-9A-Za-z][0-9A-Za-z-]+.)+[A-Za-z]{2,5}$",$_POST[email])
 ) {
-echo "<font color='red'>邮箱格式不正确！</font>";exit;
+echo "<br><br><font color='red'>邮箱格式不正确！</font>";exit;
 
 } 
       $email=str_replace(" ","",$_POST['email']);
        //去除空格
 
-         $sql="select * from slt_user where email='$email'";
+         $sql="select * from ".$qianzui."user where email='$email'";
     $query=mysql_query($sql);
     $attitle=is_array($row=mysql_fetch_array($query));
     if($attitle){
@@ -235,8 +244,9 @@ echo "<font color='red'>邮箱格式不正确！</font>";exit;
       $getpasstime = time();
       $time = date('Y-m-d H:i'); 
       $token = md5($uid.$row['username'].$row['password']);//组合验证码 
-      
-      $url = $_SERVER['HTTP_HOST']."/ji/password_ret.php?email=".$email."&token=".$token;//构造URL
+      $dir='http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]; 
+	  $path=dirname($dir);
+      $url = $path."/password_ret.php?email=".$email."&token=".$token;//构造URL
 
 $mail = new PHPMailer();    
    
@@ -244,32 +254,104 @@ $mail->IsSMTP();                                      // set mailer to use SMTP
 $mail->Host = "smtp.163.com";  // SMTP服务器    
 $mail->Port = 25; 
 $mail->SMTPAuth = true;     // SMTP认证？    
-$mail->Username = "jizhangxptt";  // 用户名    
-$mail->Password = "1314520iloveyou"; // 密码    
-$mail->From = "jizhangxptt@163.com"; //发件人地址    
-$mail->FromName = "xptt记账系统管理员"; //发件人    
+$mail->Username = $zyemail;  // 用户名    
+$mail->Password = $zyemailpass; // 密码    
+$mail->From = $zyemail; //发件人地址    
+$mail->FromName = "记账管理员"; //发件人    
 $mail->AddAddress($email, $username); //收件人地址，收件人名称    
 $mail->WordWrap = 50;   
 //$mail->AddAttachment("/var/tmp/file.tar.gz");       // 附件    
 //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // 附件,新文件名    
 $mail->IsHTML(true);       // HTML格式    
 $mail->Subject    = "你的密码找回信"; 
-      $mail->Body       = "亲：".$username."：<Br>您在".$time."提交了找回密码请求，<Br>请点击下面的链接，按流程进行密码重设。<Br>".$url." <Br>本程序由http://xptt.com提供。";   
+      $mail->Body       = "亲：".$username."：<Br>您在".$time."提交了找回密码请求，<Br>请点击下面的链接，按流程进行密码重设。<Br>".$url." <Br>本程序由<a href='http://salitt.com'>http://salitt.com</a>提供。";   
  }
  
  if(!$mail->Send()) 
 {
  echo "Mailer Error: " . $mail->ErrorInfo; 
- echo "<font color=red>邮箱设置错误!</font>"; 
+ echo "<br><br><font color=red>邮箱设置错误!</font>"; 
 }else{ 
-  mysql_query("update `slt_user` set `utime`='$getpasstime' where uid='$uid '");
- echo "<font color=green>找回密码邮件发送成功！请查收</font>"; 
+  //mysql_query("update `".$qianzui."user` set `utime`='$getpasstime' where uid='$uid '");
+ echo "<br><br><font color=green>找回密码邮件发送成功！请查收</font>"; 
  }
     
- } ?>
-        </div>       
-    </fieldset>
-    </form>
+ } ?> 
+</p>
 </div>
+</div>
+<script type="text/javascript" src='js/stopExecutionOnTimeout.js?t=1'></script>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script>
+$('input[type="submit"]').click(function () {
+	$('.login').addClass('test');
+	setTimeout(function () {
+		$('.login').addClass('testtwo');
+	}, 300);
+	setTimeout(function () {
+		$('.authent').show().animate({ right: -320 }, {
+			easing: 'easeOutQuint',
+			duration: 600,
+			queue: false
+		});
+		$('.authent').animate({ opacity: 1 }, {
+			duration: 200,
+			queue: false
+		}).addClass('visible');
+	}, 500);
+	setTimeout(function () {
+		$('.authent').show().animate({ right: 90 }, {
+			easing: 'easeOutQuint',
+			duration: 600,
+			queue: false
+		});
+		$('.authent').animate({ opacity: 0 }, {
+			duration: 200,
+			queue: false
+		}).addClass('visible');
+		$('.login').removeClass('testtwo');
+	}, 2500);
+	setTimeout(function () {
+		$('.login').removeClass('test');
+		$('.login div').fadeOut(123);
+	}, 2800);
+	setTimeout(function () {
+		$('.success').fadeIn();
+	}, 3200);
+});
+$('input[type="text"],input[type="password"]').focus(function () {
+	$(this).prev().animate({ 'opacity': '1' }, 200);
+});
+$('input[type="text"],input[type="password"]').blur(function () {
+	$(this).prev().animate({ 'opacity': '.5' }, 200);
+});
+$('input[type="text"],input[type="password"]').keyup(function () {
+	if (!$(this).val() == '') {
+		$(this).next().animate({
+			'opacity': '1',
+			'right': '30'
+		}, 200);
+	} else {
+		$(this).next().animate({
+			'opacity': '0',
+			'right': '20'
+		}, 200);
+	}
+});
+var open = 0;
+$('.tab').click(function () {
+	$(this).fadeOut(200, function () {
+		$(this).parent().animate({ 'left': '0' });
+	});
+});
+</script>
+<?php  
+mysql_close($query_sql);
+mysql_close($sql);
+mysql_close($count_result);
+mysql_close($sqlzhichu);
+mysql_close($sqlshouru);
+?>
 </body>
 </html>

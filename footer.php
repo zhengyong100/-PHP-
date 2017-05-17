@@ -1,6 +1,6 @@
 <table align="center" width="100%" height="20" border="0" align="center" cellpadding="5" cellspacing="1" bgcolor="#B3B3B3" class='table table-striped table-bordered'>
   <tr>
-    <td align="center" bgcolor="#EBEBEB">亲，欢迎使用xptt记账程序3.0。</td>
+    <td align="center" bgcolor="#EBEBEB">Copyright &copy; 2017 <a href="http://salitt.com/">Salitt</a>. 记账多用户版</td>
   </tr>
 </table>
 </div>

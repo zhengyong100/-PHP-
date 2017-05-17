@@ -102,7 +102,7 @@ $offset = ($p-1)*$pagesize;
 
 //查询本页显示的数据
 
-$query_sql = "SELECT * FROM slt_account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
+$query_sql = "SELECT * FROM ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime DESC LIMIT  $offset , $pagesize";
 $query=mysql_query($query_sql);
 
 			echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1' bgcolor='#B3B3B3' class='table table-striped table-bordered'>
@@ -120,7 +120,7 @@ $query=mysql_query($query_sql);
 }
 
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 
@@ -157,7 +157,7 @@ echo "<table width='100%' border='0' align='left' cellpadding='5' cellspacing='1
 //分页代码
 //计算总数
 
-$count_result = mysql_query("SELECT count(*) as count FROM slt_account where jiid='$_SESSION[uid]'");
+$count_result = mysql_query("SELECT count(*) as count FROM ".$qianzui."account where jiid='$_SESSION[uid]'");
 $count_array = mysql_fetch_array($count_result);
 
 //计算总的页数
@@ -184,11 +184,11 @@ echo "</td></tr></table>";
 $k=date("Y-m-d");
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($k." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]'";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]'";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  		
@@ -206,11 +206,11 @@ $k=date("Y-m-d",mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y")));
 $j=date("Y-m-d",mktime(23,59,59,date("m"),date("d")-date("w")+7,date("Y")));
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]' " ;
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' " ;
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 			
@@ -233,11 +233,11 @@ $j=date("Y-m-d",$tj);
 $k=date("Y-m-d",$tk);
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -262,11 +262,11 @@ $j=date("Y-m-d",$tj);
 $k=date("Y-m-d",$tk);
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -287,11 +287,11 @@ $query=mysql_query($query_sql);
 $k=date("Y-m-d",strtotime('-1 day'));
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($k." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]'";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]'";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -314,11 +314,11 @@ $k=date("Y-m-d",mktime(0, 0 , 0,date("m"),date("d")-date("w")+1-14,date("Y")));
 $j=date("Y-m-d",mktime(23,59,59,date("m"),date("d")-date("w")+7-14,date("Y")));
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]'";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]'";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -343,11 +343,11 @@ $j=date("Y-m-d",$tj);
 $k=date("Y-m-d",$tk);
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -374,11 +374,11 @@ $j="$n-12-31";
 $k="$n-01-01";
 
 $sqltime=" actime >".strtotime($k." 0:0:0")." and actime <".strtotime($j." 23:59:59");
-$query_sql = "SELECT * FROM slt_account where ".$sqltime." and jiid='$_SESSION[uid]' ";
+$query_sql = "SELECT * FROM ".$qianzui."account where ".$sqltime." and jiid='$_SESSION[uid]' ";
 $query=mysql_query($query_sql);
               
               		while($row = mysql_fetch_array($query)){
-              		$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+              		$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 		  
@@ -394,12 +394,12 @@ $query=mysql_query($query_sql);
 				
 				<?php
 			
-				$sql="select * from slt_account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
+				$sql="select * from ".$qianzui."account where jiid='$_SESSION[uid]' ORDER BY actime ASC";
 			
 			
 			$query=mysql_query($sql);
 			while($row = mysql_fetch_array($query)){
-				$sql="select * from slt_account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
+				$sql="select * from ".$qianzui."account_class where classid= $row[acclassid] and ufid='$_SESSION[uid]'";
 				$classquery=mysql_query($sql);
 				$classinfo = mysql_fetch_array($classquery);
 				

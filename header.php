@@ -4,7 +4,9 @@ session_start();
 <?php
   if($_GET['tj'] == 'logout'){
   session_start(); //开启session
-  session_destroy();  //注销session
+  
+  unset($_SESSION['user_shell']);
+  //session_destroy();  //注销session
   header("location:index.php"); //跳转到首页
   }
 ?>
@@ -43,10 +45,11 @@ $arr=user_shell($_SESSION['uid'],$_SESSION['user_shell']);//对权限进行判�
 			<li><a href="stat.php">近期统计</a></li>
 			<li><a href="annual_stat.php">全年统计</a></li>
 			<li><a href="classify.php">分类编辑</a></li>
-<li><a href="search.php">导出导出</a></li>
+<li><a href="search.php">导入导出</a></li>
 <li><a href="edit.php">查询修改</a></li>
 <li><a href="users.php"><?php echo"账号：";echo $arr['username'];?></a></li>
-<li><a href="index.php?tj=logout">退出</a></li>
+<li><a href="logout.php">退出</a></li>
+<?php //index.php?tj=logout ?>
 
 		</ul>
 	</div>

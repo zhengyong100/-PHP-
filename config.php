@@ -2,11 +2,11 @@
 //数据库配置信息，根据情况修改，否则无法安装
 $db_servername="localhost";//Mysql服务器地址 将 localhost 修改为你的数据库地址
 $db_username="salittxy_user";//数据库用户名 将 username 修改为你的数据库用户名
-$db_password="xxxxxxx";//数据库密码 将 password 修改为你的数据库密码
+$db_password="******";//数据库密码 将 password 修改为你的数据库密码
 $db_dbname="salittxy_db";//数据库名 将 jizhang 修改为你的数据库名
-$qianzui="slt_";//表前缀
+$qianzui="acc_";//表前缀
 $zyemail="salitt0@163.com";//配置找回密码邮箱，推荐163邮箱
-$zyemailpass="xxxxxx";//邮箱密码
+$zyemailpass="******";//邮箱密码
 $conn=mysql_connect($db_servername,$db_username,$db_password);
 if(indatabase($db_dbname,$conn)){
   mysql_select_db($db_dbname,$conn);
@@ -15,12 +15,13 @@ if(indatabase($db_dbname,$conn)){
 
 
 function user_shell($uid,$shell){ //其他页面权限判断
- $sqlshell="SELECT * FROM `slt_user` WHERE `uid` = '$uid'";
+global $qianzui;
+ $sqlshell="SELECT * FROM `".$qianzui."user` WHERE `uid` = '$uid'";
   $query=mysql_query($sqlshell);
      $exist=is_array($row=mysql_fetch_array($query));
   $exist2=$exist?$shell==md5($row['username'].$row['password']):FALSE;
   if($exist2){  return $row;  }else{   echo "你无权限访问该页,正在跳转登入页面。。。"; 
-  echo "<meta http-equiv=refresh content='0; url=index.php'>";
+  echo "<meta http-equiv=refresh content='0; url=login.php'>";
    exit();
    }  } 
 
