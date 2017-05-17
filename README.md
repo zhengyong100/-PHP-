@@ -8,6 +8,7 @@
 2.访问install.php进行安装。
 
 Demo：http://salitt.com/site/account
+用户名：admin 密码：admin
 
 更新日志：
 
