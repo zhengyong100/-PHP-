@@ -37,9 +37,14 @@ if($_GET[Submit]){
 	$sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,jiid,zhifu) values ('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
 	$query=mysql_query($sql);
 	if($query)
+	{
 		$prompttext="<font color='#009900'>OK，记完了！</font>";
+		header("Location:add.php");//跳转到add.php防止手动刷新重复提交
+	}
 	else
+	{
 		$prompttext="<font color='red'>出错啦，写入数据库时出错！</font>";
+	}
 }
 ?>
 
