@@ -3,12 +3,11 @@
 
 使用方法：
 
-1.首先修改config.php内的前9行，修改为你的mysql配置，stmp邮箱请使用163邮箱。
+1.首先修改config.php内的前9行，修改为你的配置，stmp邮箱请使用163邮箱。
 
 2.访问install.php进行安装。
 
 Demo：http://salitt.com/site/account
-用户名：admin 密码：admin
 
 更新日志：
 
@@ -25,3 +24,5 @@ Demo：http://salitt.com/site/account
 5.优化判断逻辑、删除原来的login.php并用index.php代替。
 
 6.支持2位小数金额.
+
+7.修复add.php手动刷新重复提交数据
