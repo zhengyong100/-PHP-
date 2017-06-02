@@ -17,5 +17,7 @@ mysql_close($sqlshouru);
     <script src="js/jquery.min.js"></script>
     <!-- 可选: 合并了 Bootstrap JavaScript 插件 -->
     <script src="js/bootstrap.min.js"></script>
+	<!-- 时间日期 插件 -->
+	<script type="text/javascript" src="js/datetime.js"></script>
 </body>
 </html>

@@ -99,7 +99,7 @@ if($classinfo[classtype]==1){
    }
 
 echo "<br /><br />
-时间：<input rows='1' cols='20' name='shijian' value='".date('Y-m-d H:i',$row[actime])."'> <br /><br />
+时间：<input rows='1' cols='20' name='shijian' class='sang_Calender' value='".date('Y-m-d H:i',$row[actime])."'> <br /><br />
 备注：<input type=text name='beizhu' value=".$row[acremark]."><br /><br />
 　<input type=submit name=ok value='提交' class='btn btn-default'>
    </form>		</td>

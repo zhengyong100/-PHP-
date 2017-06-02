@@ -32,9 +32,9 @@ function checkpost2()
 $income=0;
 $spending=0;
 //检查是否记账并执行
-if($_GET[Submit]){
-	$time100=strtotime($_GET[time]);
-	$sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,jiid,zhifu) values ('$_GET[money]', '$_GET[classid]', '$time100', '$_GET[remark]', '$_SESSION[uid]', '$_GET[zhifu]')";
+if($_POST[Submit]){
+	$time100=strtotime($_POST[time]);
+	$sql="insert into ".$qianzui."account (acmoney, acclassid, actime, acremark,jiid,zhifu) values ('$_POST[money]', '$_POST[classid]', '$time100', '$_POST[remark]', '$_SESSION[uid]', '$_POST[zhifu]')";
 	$query=mysql_query($sql);
 	if($query)
 	{
@@ -53,7 +53,7 @@ if($_GET[Submit]){
         <td bgcolor="#EBEBEB">　<font color="red">支出</font></td>
         </tr>
 <tr><td bgcolor="#FFFFFF">
-<form id="form2" name="myform2" method="get" onsubmit="return checkpost2();">
+<form id="form2" name="myform2" method="post" onsubmit="return checkpost2();">
           　<font color="red">金额：</font><input name="money" type="text" id="money" size="8" /><div style="display:none;"><input name="zhifu" type="text" id="zhifu" value="2" size="8" /></div>
           　<font color="red">分类：</font><select name="classid" id="classid" style="height:26px;">
               <?php
@@ -66,7 +66,7 @@ if($_GET[Submit]){
               </select> <font color="red"><a href="classify.php" style="color:#ccc;">添加分类</a></font>
           <br /><br />　备注：
             <input name="remark" type="text" id="remark" /> <font color="#ccc">方便搜索</font>
-         <br /><br />　时间：<input type="text" name="time" id="time" value="<?php $xz=date("Y-m-d H:i");;echo "$xz"; ?>"/>
+         <br /><br />　时间：<input type="text" name="time" id="time" class="sang_Calender" value="<?php $xz=date("Y-m-d H:i");;echo "$xz"; ?>"/>
             <input name="Submit" type="submit" id="Submit" value="记账" /> <a href="batch_add.php" style="color:#ccc;">批量</a>
   </form>
 </td></tr>
@@ -76,7 +76,7 @@ if($_GET[Submit]){
 		<td bgcolor="#EBEBEB">　<font color="MediumSeaGreen">收入</font></td>
         </tr>
  <tr><td bgcolor="#FFFFFF">
-<form id="form" name="myform" method="get" onsubmit="return checkpost();">
+<form id="form" name="myform" method="post" onsubmit="return checkpost();">
           　<font color="MediumSeaGreen">金额：</font>
             <input name="money" type="text" id="money" value="" size="8" /><div style="display:none;"><input name="zhifu" type="text" id="zhifu" value="1" size="8" /></div>
          　<font color="MediumSeaGreen">分类：</font>
@@ -91,7 +91,7 @@ if($_GET[Submit]){
               </select> <font color="MediumSeaGreen"><a href="classify.php" style="color:#ccc;">添加分类</a></font>
           <br /><br />　备注：
             <input name="remark" type="text" id="remark" /> <font color="#ccc">方便搜索</font>
-          <br /><br />　时间：<input type="text" name="time" id="time" value="<?php $xz=date("Y-m-d H:i");;echo "$xz"; ?>"/>
+          <br /><br />　时间：<input type="text" name="time" id="time" class="sang_Calender" value="<?php $xz=date("Y-m-d H:i");;echo "$xz"; ?>"/>
             <input type="submit" name="Submit" value="记账" /> <a href="batch_add.php" style="color:#ccc;">批量</a>
  </form>
         
@@ -110,7 +110,7 @@ if($_GET[Submit]){
 $pagesize = 31;
 
 //确定页数 p 参数
-$p = $_GET['p']?$_GET['p']:1;
+$p = $_POST['p']?$_POST['p']:1;
 
 //数据指针
 $offset = ($p-1)*$pagesize;
